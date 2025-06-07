@@ -1,0 +1,49 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '2.4.5'
+    id 'io.spring.dependency-management' version '1.1.7'
+}
+
+group = 'com.wy'
+version = '0.0.1-SNAPSHOT'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    swaggerVersion = '1.5.24'
+    swaggerUiVersion = '2.10.5'
+    springCloudVersion = '3.0.5'
+}
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    runtimeOnly 'com.mysql:mysql-connector-j'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    compileOnly "org.projectlombok:lombok"
+    annotationProcessor "org.projectlombok:lombok"
+    //swagger begin
+    implementation "io.swagger:swagger-annotations:${swaggerVersion}"
+    implementation "io.swagger:swagger-models:${swaggerVersion}"
+    implementation "io.springfox:springfox-swagger2:${swaggerUiVersion}"
+    implementation "io.springfox:springfox-swagger-ui:${swaggerUiVersion}"
+    implementation "io.springfox:springfox-spring-webmvc:${swaggerUiVersion}"
+    //swagger end;
+    developmentOnly("org.springframework.boot:spring-boot-devtools")
+    implementation("org.springframework.cloud:spring-cloud-starter-openfeign:${springCloudVersion}")
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
